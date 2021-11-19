@@ -75,24 +75,25 @@ def make_chart(symbol, chart_type, time_series, start_date, end_date):
     close_list = []
     date_list = []
 
-    for date in parsed_json[ts]:
-        if ts == "Time Series (5min)":
-            if start_date <= convert_datetime(date) and convert_datetime(date) <= end_date:
-                date_list.append(date)
-                open_list.append(float(parsed_json[ts][date]["1. open"]))
-                high_list.append(float(parsed_json[ts][date]["2. high"]))
-                low_list.append(float(parsed_json[ts][date]["3. low"]))
-                close_list.append(float(parsed_json[ts][date]["4. close"]))
-            else: continue
-        else:
+    if ts in parsed_json:
+        for date in parsed_json[ts]:
+            if ts == "Time Series (5min)":
+                if start_date <= convert_datetime(date) and convert_datetime(date) <= end_date:
+                    date_list.append(date)
+                    open_list.append(float(parsed_json[ts][date]["1. open"]))
+                    high_list.append(float(parsed_json[ts][date]["2. high"]))
+                    low_list.append(float(parsed_json[ts][date]["3. low"]))
+                    close_list.append(float(parsed_json[ts][date]["4. close"]))
+                else: continue
+            else:
 
-            if start_date <= convert_date(date) and convert_date(date) <= end_date:
-                date_list.append(date)
-                open_list.append(float(parsed_json[ts][date]["1. open"]))
-                high_list.append(float(parsed_json[ts][date]["2. high"]))
-                low_list.append(float(parsed_json[ts][date]["3. low"]))
-                close_list.append(float(parsed_json[ts][date]["4. close"]))
-            else: continue
+                if start_date <= convert_date(date) and convert_date(date) <= end_date:
+                    date_list.append(date)
+                    open_list.append(float(parsed_json[ts][date]["1. open"]))
+                    high_list.append(float(parsed_json[ts][date]["2. high"]))
+                    low_list.append(float(parsed_json[ts][date]["3. low"]))
+                    close_list.append(float(parsed_json[ts][date]["4. close"]))
+                else: continue
 
     date_list.reverse()
     open_list.reverse()
